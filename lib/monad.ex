@@ -29,8 +29,8 @@ defimpl Monad, for: Tuple do
     f.(v)
   end
   def bind_wrapped(m = {:error, _}, _), do: m
-  def bind_wrapped({:ok, v} = m, f) ,do: Result.wrap(bind(m,f))
-  def bind_wrapped({:just, v} = m, f) ,do: Maybe.wrap(bind(m,f))
+  def bind_wrapped({:ok, _v} = m, f) ,do: Result.wrap(bind(m,f))
+  def bind_wrapped({:just, _v} = m, f) ,do: Maybe.wrap(bind(m,f))
   # Result
   def tap(m = {:error, _}, _), do: m
   def tap({:ok, v}, f) when is_function(f) do
