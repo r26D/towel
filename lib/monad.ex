@@ -1,5 +1,6 @@
 defprotocol Monad do
   def bind(m, f)
+  def bind_wrapped(m, f)
   def tap(m, f)
 end
 
@@ -8,7 +9,7 @@ defimpl Monad, for: List do
   def bind(m, f) when is_function(f) do
     Enum.flat_map m, f
   end
-
+  def bind_wrapped(m, f) ,do: Result.wrap(bind(m,f))
   def tap(m, f) when is_function(f) do
     Enum.map m, fn i ->
       f.(i)
@@ -27,7 +28,9 @@ defimpl Monad, for: Tuple do
   def bind({:just, v}, f) when is_function(f) do
     f.(v)
   end
-
+  def bind_wrapped(m = {:error, _}, _), do: m
+  def bind_wrapped({:ok, v} = m, f) ,do: Result.wrap(bind(m,f))
+  def bind_wrapped({:just, v} = m, f) ,do: Maybe.wrap(bind(m,f))
   # Result
   def tap(m = {:error, _}, _), do: m
   def tap({:ok, v}, f) when is_function(f) do
@@ -44,5 +47,6 @@ end
 defimpl Monad, for: Atom do
   # Maybe
   def bind(:nothing, _), do: :nothing
+  def bind_wrapped(:nothing, _), do: :nothing
   def tap(:nothing, _), do: :nothing
 end
