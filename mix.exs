@@ -1,4 +1,4 @@
-defmodule Towel.Mixfile do
+defmodule Towel.MixProject do
   use Mix.Project
 
   def project do
@@ -9,20 +9,16 @@ defmodule Towel.Mixfile do
      package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: [{:ex_doc, ">= 0.0.0", only: :dev, runtime: false}]]
   end
 
   def package do
     [licenses: ["MIT"],
-     contributors: ["Kash Nouroozi","tim-smart"],
-     links: %{"Github" => "https://github.com/r26D/towel"}]
+     contributors: ["Kash Nouroozi","tim-smart","Dirk Elmendorf", "Cyrus Nouroozi"],
+     links: %{"Github" => "https://github.com/r26D/towel", "Upstream" => "https://github.com/CyrusOfEden/towel"}]
   end
 
   def application do
-    []
-  end
-
-  defp deps do
     []
   end
 end

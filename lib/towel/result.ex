@@ -1,4 +1,4 @@
-defmodule Result do
+defmodule Towel.Result do
   def wrap(m = {:ok, _}), do: m
   def wrap(m = {:error, _}), do: m
 
@@ -20,4 +20,3 @@ defmodule Result do
   def is_error({:error, _}), do: true
   def is_error(_), do: false
 end
-
